@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${isEdit} ? 'Update Course' : 'Create Course'">Course Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" th:href="@{/home}">UniFlow</a>
+    <nav class="nav-links">
+        <a th:href="@{/admin/courses}">Back to list</a>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="simple-head">
+        <h1 th:text="${isEdit} ? 'Cập nhật học phần' : 'Tạo học phần mới'">Form</h1>
+    </section>
+
+    <form class="course-form" th:object="${courseForm}"
+          th:action="${isEdit} ? @{'/admin/courses/edit/' + ${courseId}} : @{/admin/courses/create}"
+          method="post">
+
+        <label>Tên học phần
+            <input type="text" th:field="*{name}" required>
+            <small class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+        </label>
+
+        <label>Image URL
+            <input type="text" th:field="*{image}" placeholder="https://...">
+            <small class="field-error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></small>
+        </label>
+
+        <label>Số tín chỉ
+            <input type="number" th:field="*{credits}" min="1" required>
+            <small class="field-error" th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></small>
+        </label>
+
+        <label>Giảng viên
+            <input type="text" th:field="*{lecturer}" required>
+            <small class="field-error" th:if="${#fields.hasErrors('lecturer')}" th:errors="*{lecturer}"></small>
+        </label>
+
+        <label>Danh mục
+            <select th:field="*{categoryId}" required>
+                <option value="">-- Chọn danh mục --</option>
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            </select>
+            <small class="field-error" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></small>
+        </label>
+
+        <button type="submit" th:text="${isEdit} ? 'Update Course' : 'Create Course'">Save</button>
+    </form>
+</main>
+</body>
+</html>
