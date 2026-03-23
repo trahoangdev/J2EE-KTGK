@@ -27,12 +27,18 @@
         <p>Danh sách các môn bạn đã enroll theo thời gian gần nhất.</p>
     </section>
 
+    <div class="notice success" th:if="${param.cancelled}">Hủy đăng ký học phần thành công.</div>
+    <div class="notice error" th:if="${param.cancelError}">Không thể hủy đăng ký học phần.</div>
+
     <div class="my-course-list" th:if="${!enrollments.isEmpty()}">
         <article class="my-course-item" th:each="enrollment : ${enrollments}">
             <h3 th:text="${enrollment.course.name}">Course</h3>
             <p><strong>Tín chỉ:</strong> <span th:text="${enrollment.course.credits}">3</span></p>
             <p><strong>Giảng viên:</strong> <span th:text="${enrollment.course.lecturer}">Lecturer</span></p>
             <p><strong>Ngày đăng ký:</strong> <span th:text="${enrollment.enrollDate}">2026-03-23</span></p>
+            <form th:action="@{'/enroll/cancel/' + ${enrollment.course.id}}" method="post">
+                <button type="submit" class="cancel-btn" onclick="return confirm('Bạn có chắc muốn hủy học phần này?')">Hủy đăng ký</button>
+            </form>
         </article>
     </div>
 

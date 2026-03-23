@@ -34,4 +34,14 @@ public class EnrollmentController {
         model.addAttribute("enrollments", enrollmentService.getMyEnrollments(authentication.getName()));
         return "my-courses";
     }
+
+    @PostMapping("/cancel/{courseId}")
+    public String cancelEnrollment(@PathVariable Long courseId, Authentication authentication) {
+        try {
+            enrollmentService.cancelEnrollment(authentication.getName(), courseId);
+            return "redirect:/enroll/my-courses?cancelled";
+        } catch (IllegalArgumentException ex) {
+            return "redirect:/enroll/my-courses?cancelError";
+        }
+    }
 }

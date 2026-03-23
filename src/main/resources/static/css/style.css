@@ -64,6 +64,7 @@ body {
 .link-btn,
 .oauth-btn,
 .enroll-btn,
+.cancel-btn,
 .create-btn,
 .actions button {
     font-family: inherit;
@@ -81,6 +82,7 @@ body {
 .auth-form button,
 .course-form button,
 .enroll-btn,
+.cancel-btn,
 .create-btn,
 .actions button,
 .oauth-btn {
@@ -402,6 +404,15 @@ th {
     margin: 0 0 0.4rem;
     font-family: "Fraunces", serif;
     color: var(--bg-strong);
+}
+
+.cancel-btn {
+    margin-top: 0.35rem;
+    background: #8d2d2d;
+}
+
+.cancel-btn:hover {
+    background: #6f2222;
 }
 
 .field-error {

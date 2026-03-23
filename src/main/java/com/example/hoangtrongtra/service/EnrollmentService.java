@@ -45,4 +45,15 @@ public class EnrollmentService {
         Student student = studentService.findByPrincipalName(principalName);
         return enrollmentRepository.findByStudentOrderByEnrollDateDesc(student);
     }
+
+    @Transactional
+    public void cancelEnrollment(String principalName, Long courseId) {
+        Student student = studentService.findByPrincipalName(principalName);
+        Course course = courseService.findById(courseId);
+
+        long deletedRows = enrollmentRepository.deleteByStudentAndCourse(student, course);
+        if (deletedRows == 0) {
+            throw new IllegalArgumentException("Không tìm thấy đăng ký để hủy");
+        }
+    }
 }

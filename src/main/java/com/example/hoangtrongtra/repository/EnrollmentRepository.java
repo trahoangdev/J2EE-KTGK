@@ -11,5 +11,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     boolean existsByStudentAndCourse(Student student, Course course);
 
+    long deleteByStudentAndCourse(Student student, Course course);
+
     List<Enrollment> findByStudentOrderByEnrollDateDesc(Student student);
 }
